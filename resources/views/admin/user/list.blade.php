@@ -51,8 +51,8 @@
           serverSide: true,
           ajax: "{{ url('/user-data') }}",
           columns: [
-              {data: 'lastname', name: 'lastname'},
               {data: 'firstname', name: 'firstname'},
+              {data: 'lastname', name: 'lastname'},
               {data: 'email', name: 'email'},
               {data: 'action', name: 'action'},
 

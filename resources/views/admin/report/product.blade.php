@@ -21,6 +21,7 @@
         <!-- /.container-fluid -->
     </div>
     <section class="content">
+        <img id="labelImage" src="" alt="">
         <div class="container-fluid">
             <div class="card">
                 <div class="card-header">
@@ -165,7 +166,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
-<script src="{{asset('js/jquery.dymo.sdk.min.js')}}"></script>
+<script src="http://labelwriter.com/software/dls/sdk/js/DYMO.Label.Framework.latest.js"
+        type="text/javascript" charset="UTF-8"> </script>
 <script src="{{asset('js/product_all.js')}}"></script>
     <script>
 

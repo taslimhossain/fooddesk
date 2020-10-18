@@ -9,6 +9,7 @@ function print_labeler_product_report(prod_id,start,end,print_url)
 
 			for(var i=0;i<response.length;i++)
 	     	{
+				
 	     		var content = response[i];
 	     		var proname = [];
 	     		var name 	= content.proname;
@@ -32,7 +33,7 @@ function print_labeler_product_report(prod_id,start,end,print_url)
 	     			}
 	     		}
 
-	     		var template = "﻿<"+"?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
+	     		var template = "<"+"?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n\
 	     		<DieCutLabel Version=\"8.0\" Units=\"twips\">\
 		     		<PaperOrientation>Landscape</PaperOrientation>\
 		     		<Id>WhiteNameBadge11356</Id>\
@@ -134,7 +135,8 @@ function print_labeler_product_report(prod_id,start,end,print_url)
 			     		</TextObject>\
 		 				<Bounds X=\"3255.87255859375\" Y=\"80.4545364379883\" Width=\"1472.72729492188\" Height=\"1767.27270507813\" />\
 		     		</ObjectInfo>\
-	     		</DieCutLabel>";
+				 </DieCutLabel>";
+			
 	     		create_label(template);
 	     	}
 
@@ -153,7 +155,17 @@ function create_label(data)
         try
         {
            	var labelXml = data;
-        	var label = dymo.label.framework.openLabelXml(labelXml);
+			var label = dymo.label.framework.openLabelXml(labelXml);
+		
+			console.log("data.........",label);
+
+			var pngData = label.render();
+			console.log("ddata.........",pngData);
+			var labelImage = document.getElementById('labelImage');
+			labelImage.src = "data:image/png;base64," + pngData;
+
+
+
             var printers = dymo.label.framework.getPrinters();
             if (printers.length == 0)
                 throw "No DYMO printers are installed. Install DYMO printers.";
