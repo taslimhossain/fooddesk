@@ -118,7 +118,7 @@ Route::post('report-order', 'OrderController@orderReportResult')->name('orderRep
 Route::get('report-order-export', 'OrderController@orderReportExport')->name('orderReportExport')->middleware('is_admin');
 //orderReportResult
 Route::get('report-order', 'OrderController@orderReport')->name('orderReport')->middleware('is_admin');
-Route::get('print-report-order', 'OrderController@print_report_product')->name('orderReport')->middleware('is_admin');
+Route::get('print-report-order', 'OrderController@print_report_product')->name('printOrderProduct')->middleware('is_admin');
 Route::get('report-per-customer', 'OrderController@customerReport')->name('customerReport')->middleware('is_admin');
 Route::post('report-per-customer', 'OrderController@customerReportResult')->name('customerReportResult')->middleware('is_admin');
 Route::get('report-customer-export', 'OrderController@customerReportExport')->name('customerReportExport')->middleware('is_admin');

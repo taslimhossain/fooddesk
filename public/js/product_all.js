@@ -1,17 +1,16 @@
-function print_labeler_product_report(prod_id,start,end)
+function print_labeler_product_report(prod_id,start,end,print_url)
 {
-	var base_url_new=base_url+'cp/orders/ordered_products_list';
-	$.post(base_url_new,{
+	$.get(print_url,{
 		'start_date':start,
 		'end_date':end,
 		'product_id':prod_id,
 	},function(response)
 	{
-		
+
 			for(var i=0;i<response.length;i++)
 	     	{
 	     		var content = response[i];
-	     		var proname = []; 
+	     		var proname = [];
 	     		var name 	= content.proname;
 	     		var count 	= 0;
 	     		name 		= name.split( " " );
@@ -138,12 +137,12 @@ function print_labeler_product_report(prod_id,start,end)
 	     		</DieCutLabel>";
 	     		create_label(template);
 	     	}
-		
+
 		/*else
 		{
 
 		}*/
-     	
+
 
 	},'json'
 	);
@@ -158,7 +157,7 @@ function create_label(data)
             var printers = dymo.label.framework.getPrinters();
             if (printers.length == 0)
                 throw "No DYMO printers are installed. Install DYMO printers.";
-            
+
             var printerName = "";
             for (var i = 0; i < printers.length; ++i)
             {
@@ -169,7 +168,7 @@ function create_label(data)
                     break;
                 }
             }
-            
+
             if (printerName == "")
                 throw "No LabelWriter printers found. Install LabelWriter printer";
 
@@ -180,5 +179,33 @@ function create_label(data)
         {
             alert(e.message || e);
         }
-   
+
+}
+function stripslashes (str) {
+    // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+    // +   improved by: Ates Goral (http://magnetiq.com)
+    // +      fixed by: Mick@el
+    // +   improved by: marrtins
+    // +   bugfixed by: Onno Marsman
+    // +   improved by: rezna
+    // +   input by: Rick Waldron
+    // +   reimplemented by: Brett Zamir (http://brett-zamir.me)
+    // +   input by: Brant Messenger (http://www.brantmessenger.com/)
+    // +   bugfixed by: Brett Zamir (http://brett-zamir.me)
+    // *     example 1: stripslashes('Kevin\'s code');
+    // *     returns 1: "Kevin's code"
+    // *     example 2: stripslashes('Kevin\\\'s code');
+    // *     returns 2: "Kevin\'s code"
+    return (str + '').replace(/\\(.?)/g, function (s, n1) {
+        switch (n1) {
+            case '\\':
+                return '\\';
+            case '0':
+                return '\u0000';
+            case '':
+                return '';
+            default:
+                return n1;
+        }
+    });
 }

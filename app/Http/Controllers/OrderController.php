@@ -278,18 +278,19 @@ class OrderController extends Controller
         return view('admin.order.printSticker', compact('order'));
     }
 
-    public function printPerOrder(Order $order){
+    public function printPerOrder(Order $order)
+    {
         return response()->json([
             "error" => 0,
             "message" => "",
-            "data" =>[
-                'order_id'=>$order->id,
-                'name'=>$order->lastname,
-                'company_c'=>0,
-                'amount'=>$order->total,
-                'address'=>($order->s_address1)?$order->s_address1:"",
-                'remark'=>'',
-                'date'=>date('Y-m-d h:i',strtotime($order->date)),
+            "data" => [
+                'order_id' => $order->id,
+                'name' => $order->lastname,
+                'company_c' => 0,
+                'amount' => $order->total,
+                'address' => ($order->s_address1) ? $order->s_address1 : "",
+                'remark' => '',
+                'date' => date('Y-m-d h:i', strtotime($order->date)),
             ]
         ]);
     }
@@ -298,22 +299,22 @@ class OrderController extends Controller
     {
         //dd($order->orderLines->product);
         $products = [];
-        foreach ($order->orderLines as $orderLine){
+        foreach ($order->orderLines as $orderLine) {
             $products[] = [
-                'c_name'=>$order->lastname,
-                'company'=>0,
-                'name'=>$orderLine->product->product_name_dch,
-                'default_price'=>$orderLine->price,
-                'amount'=>$orderLine->price,
-                'extra'=>($orderLine->message)?$orderLine->message:"",
-                'extra_field_text'=>'',
-                'remark'=>''
+                'c_name' => $order->lastname,
+                'company' => 0,
+                'name' => $orderLine->product->product_name_dch,
+                'default_price' => $orderLine->price,
+                'amount' => $orderLine->price,
+                'extra' => ($orderLine->message) ? $orderLine->message : "",
+                'extra_field_text' => '',
+                'remark' => ''
             ];
         }
         return response()->json([
             "error" => 0,
             "message" => "array",
-            "data" =>$products
+            "data" => $products
         ]);
     }
 
@@ -462,7 +463,7 @@ class OrderController extends Controller
                 $invoice = $row->give_invoice == 1 ? "<br><span class='text text-success ml-20'>Factuur</span>" : "";
                 return "<div class='btn btn-group'>
 
-                <a href='" . route('printOrderSticker', $row->id) . "' class='btn btn-sm btn-info'><i class='fas fa-qrcode'></i></a><a href='" . route('printOrder', $row->id) . "' class='btn btn-sm btn-primary'><i class='fas fa-print'></i></a> <a href='#' onclick='print_per_order(".$row->id.")' class='btn btn-sm btn-primary'><img src='".asset("assets/images/per_order.png")."' /></a> <a href='#' onclick='print_per_product(".$row->id.")' class='btn btn-sm btn-primary'><img src='".asset("assets/images/per_product.png")."' /></a> <a href='" . route('editOrder', $row->id) . "' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i></a><a onclick='return confirm(" . '"Bent u zeker dat u wilt verwijderen?"' . ")' href='" . route('deleteOrder', $row->id) . "' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></a></div>" . $invoice;
+                <a href='" . route('printOrderSticker', $row->id) . "' class='btn btn-sm btn-info'><i class='fas fa-qrcode'></i></a><a href='" . route('printOrder', $row->id) . "' class='btn btn-sm btn-primary'><i class='fas fa-print'></i></a> <a href='#' onclick='print_per_order(" . $row->id . ")' class='btn btn-sm btn-primary'><img src='" . asset("assets/images/per_order.png") . "' /></a> <a href='#' onclick='print_per_product(" . $row->id . ")' class='btn btn-sm btn-primary'><img src='" . asset("assets/images/per_product.png") . "' /></a> <a href='" . route('editOrder', $row->id) . "' class='btn btn-sm btn-warning'><i class='fas fa-edit'></i></a><a onclick='return confirm(" . '"Bent u zeker dat u wilt verwijderen?"' . ")' href='" . route('deleteOrder', $row->id) . "' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i></a></div>" . $invoice;
             })
             ->editColumn('total', function ($row) {
                 return "€" . number_format((float)$row->total, 2, ',', '') . "";
@@ -528,7 +529,58 @@ class OrderController extends Controller
         $orderLine->delete();
         return redirect()->route('editOrder', $order->id)->with('success', 'Item succesvol verwijderd');
     }
-    public function print_report_product(){
-        
+
+    public function print_report_product(Request $request)
+    {
+        $start = $request->input('start_date');
+        $end = $request->input('end_date');
+        $product_id = $request->input('product_id');
+        $orders = OrderLine::whereHas('order', function ($q) use ($start, $end) {
+            $q->whereDate('date', '>=', $start)->whereDate('date', '<=', $end);
+        })->where('product_id', '=', $product_id)->with('product')->with('order')->get();
+        $print_list = [];
+        foreach ($orders as $orderline) {
+            $order = $orderline->order;
+            //'c_name' => $order->lastname,
+            //                'company' => 0,
+            //                'name' => $orderLine->product->product_name_dch,
+            //                'default_price' => $orderLine->price,
+            //                'amount' => $orderLine->price,
+            //                'extra' => ($orderLine->message) ? $orderLine->message : "",
+            //                'extra_field_text' => '',
+            //                'remark' => ''
+            if($orderline->order->user_id>0):
+            $print_list[] = [
+                'id' => $order->id,
+                'orders_id' => $order->id,
+                'products_id' => $product_id,
+                'discount' => $orderline->product->discount,
+                'add_costs' => $product_id,
+                'client_name' => $orderline->order->user->lastname,
+                'clients_id' => $orderline->product->id,
+                'com_name' => "",
+                'content_type' => 1,
+                'default_price' => $orderline->price,
+                'extra_field' => "",
+                'extra_name' => "",
+                'image' => $orderline->product->image,
+                'order_pickupdate' => date('d-m-Y',strtotime($order->date)),
+                'order_pickuptime' => $order->hour.":".$order->minute,
+                'order_remarks' => "",
+                'price_per_person' => "0",
+                'price_per_unit' => "0",
+                'price_weight' => $orderline->product->price_weight,
+                'pro_remark' => "",
+                'proname' => $orderline->product->product_name_dch,
+                'qty_unit' => $orderline->product->weight_unit,
+                'quantity' => $orderline->quantity,
+                'sub_total' => $orderline->price*$orderline->quantity,
+                'total' =>$order->total,
+                'weight_per_unit' => $orderline->product->weight_unit,
+                'weight_unit' => $orderline->product->weight_unit,
+            ];
+            endif;
+        }
+        return $print_list;
     }
 }

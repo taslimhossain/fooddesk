@@ -71,7 +71,7 @@
                 <div class="card-body">
                 @if(isset($start))
                             <h4>Result showing for {{$start}} to {{$end}}</h4>
-                    
+
                     <div class="table-responsive">
 
                         <table class="table table-hover table-bordered data-table">
@@ -125,7 +125,7 @@
 
                                         @endif</td>
                                     <td>
-                                        <a onclick="print_labeler_product_report('{{$order->product_id}}','{{$start}}','{{$end}}')" href="javascript:voie(0);">
+                                        <a onclick="print_labeler_product_report('{{$order->product_id}}','{{$start}}','{{$end}}','{{route('printOrderProduct')}}')" href="javascript:void(0);">
                                         <img src="{{asset('assets/images/per_product.png')}}" alt="Print">
                                         </a>
                                         <a href="{{route('exportProductReport')}}?product_id={{$order->product_id}}&start={{$start}}&end={{$end}}" class="btn btn-warning">Export</a>
@@ -183,7 +183,7 @@
             {
                 extend: 'pdfHtml5',
                 customize: function (doc) {
-    doc.content[1].table.widths = 
+    doc.content[1].table.widths =
         Array(doc.content[1].table.body[0].length + 1).join('*').split('');
   },
                 title: 'product report {{$start}} to {{$end}}',
