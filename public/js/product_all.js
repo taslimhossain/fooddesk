@@ -157,14 +157,12 @@ function create_label(data)
            	var labelXml = data;
 			var label = dymo.label.framework.openLabelXml(labelXml);
 		
-			console.log("data.........",label);
+			//console.log("data.........",label);
 
-			var pngData = label.render();
-			console.log("ddata.........",pngData);
-			var labelImage = document.getElementById('labelImage');
-			labelImage.src = "data:image/png;base64," + pngData;
-
-
+			//var pngData = label.render();
+			//console.log("ddata.........",pngData);
+			//var labelImage = document.getElementById('labelImage');
+			//labelImage.src = "data:image/png;base64," + pngData;
 
             var printers = dymo.label.framework.getPrinters();
             if (printers.length == 0)

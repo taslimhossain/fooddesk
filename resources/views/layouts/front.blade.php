@@ -93,7 +93,7 @@ div#productContainer {
         <div class="header-bottom header-bottom-one header-sticky">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
+                    <div class="col-md-3 col-sm-12 col-xs-12 text-lg-left text-md-center text-sm-center">
                         <!-- logo -->
                         <div class="logo mt-15 mb-15">
                             <a href="{{URL::to('/')}}">
@@ -102,7 +102,7 @@ div#productContainer {
                         </div>
                         <!-- end of logo -->
                     </div>
-                    <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="col-md-9 col-sm-12 col-xs-12">
                         <div class="menubar-top d-flex justify-content-between align-items-center flex-sm-wrap flex-md-wrap flex-lg-nowrap mt-sm-15">
                             <!-- header phone number -->
                             <div class="header-contact d-flex">
