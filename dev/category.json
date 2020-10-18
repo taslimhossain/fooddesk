@@ -1,0 +1,21 @@
+{
+    "fields": [{
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "image",
+            "type": "string"
+        },
+        {
+            "name": "description",
+            "type": "text"
+        }
+
+    ],
+    "foreign_keys": [],
+    "relationships": [
+
+    ],
+    "validations": []
+}

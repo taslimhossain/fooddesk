@@ -1,0 +1,24 @@
+{
+    "fields": [
+        {
+            "name": "name",
+            "type": "string"
+        },
+        {
+            "name": "details",
+            "type": "text"
+        }
+      
+    ],
+    "foreign_keys": [
+    ],
+    "relationships": [
+    
+    ],
+    "validations": [
+        {
+            "field": "name",
+            "rules": "required|max:100"
+        }
+    ]
+}

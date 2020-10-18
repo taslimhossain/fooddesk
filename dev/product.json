@@ -1,0 +1,170 @@
+{
+    "fields": [{
+            "name": "product_name_dch",
+            "type": "string"
+        },
+        {
+            "name": "product_description_dch",
+            "type": "text"
+        },
+        {
+            "name": "fid",
+            "type": "integer"
+        },
+        {
+            "name": "category_id",
+            "type": "string"
+        },
+        {
+            "name": "subcategory_id",
+            "type": "string"
+        },
+        {
+            "name": "product_number",
+            "type": "string"
+        },
+        {
+            "name": "sell_product_option",
+            "type": "string"
+        },
+        {
+            "name": "price_per_person",
+            "type": "string"
+        },
+        {
+            "name": "min_person",
+            "type": "string"
+        },
+        {
+            "name": "max_person",
+            "type": "string"
+        },
+        {
+            "name": "price_per_unit",
+            "type": "string"
+        },
+        {
+            "name": "price_weight",
+            "type": "string"
+        },
+        {
+            "name": "discount",
+            "type": "string"
+        },
+        {
+            "name": "discount_person",
+            "type": "string"
+        },
+        {
+            "name": "status",
+            "type": "string"
+        },
+        {
+            "name": "allday_availability",
+            "type": "string"
+        },
+        {
+            "name": "availability",
+            "type": "string"
+        },
+        {
+            "name": "advance_payment",
+            "type": "string"
+        },
+        {
+            "name": "available_after",
+            "type": "string"
+        },
+        {
+            "name": "duedate",
+            "type": "string"
+        },
+        {
+            "name": "conserve_min",
+            "type": "string"
+        },
+        {
+            "name": "conserve_max",
+            "type": "string"
+        },
+        {
+            "name": "weight",
+            "type": "string"
+        },
+        {
+            "name": "weight_unit",
+            "type": "string"
+        },
+        {
+            "name": "barcode_nbr",
+            "type": "string"
+        },
+        {
+            "name": "format_label",
+            "type": "string"
+        },
+        {
+            "name": "type",
+            "type": "string"
+        },
+        {
+            "name": "type_label",
+            "type": "string"
+        },
+        {
+            "name": "extra_notification_dch",
+            "type": "text"
+        },
+        {
+            "name": "ingredients_dch",
+            "type": "text"
+        },
+        {
+            "name": "e_val_1",
+            "type": "string"
+        },
+        {
+            "name": "e_val_2",
+            "type": "string"
+        },
+        {
+            "name": "carbo",
+            "type": "string"
+        },
+        {
+            "name": "sugar",
+            "type": "string"
+        },
+        {
+            "name": "fats",
+            "type": "string"
+        },
+        {
+            "name": "sat_fats",
+            "type": "string"
+        },
+        {
+            "name": "salt",
+            "type": "string"
+        },
+        {
+            "name": "fibers",
+            "type": "string"
+        },
+        {
+            "name": "natrium",
+            "type": "string"
+        },
+        {
+            "name": "allergence_dch",
+            "type": "string"
+        }
+
+
+    ],
+    "foreign_keys": [],
+    "relationships": [
+
+    ],
+    "validations": []
+}

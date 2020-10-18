@@ -1,0 +1,36 @@
+{
+    "fields": [{
+            "name": "site_name",
+            "type": "string"
+        },
+        {
+            "name": "logo",
+            "type": "text"
+        },
+        {
+            "name": "api_key",
+            "type": "text"
+        },
+        {
+            "name": "from_email",
+            "type": "text"
+        },
+        {
+            "name": "fav_icon",
+            "type": "text"
+        },
+        {
+            "name": "them_color",
+            "type": "text"
+        }
+
+    ],
+    "foreign_keys": [],
+    "relationships": [
+
+    ],
+    "validations": [{
+        "field": "name",
+        "rules": "required|max:100"
+    }]
+}
