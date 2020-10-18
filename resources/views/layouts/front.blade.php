@@ -130,9 +130,16 @@ div#productContainer {
                                     <li><a href="{{route('checkout')}}">{{ __('f.checkout') }}</a></li>
                                     <li><a href="#">{{ __('f.contact') }}</a></li>
                                     @if(auth()->check())
+
                                         <li><a href="{{ route('logout') }}"
                                                onclick="event.preventDefault();
                                                      document.getElementById('mylogout-form').submit();">{{ __('f.logout') }}</a></li>
+                                        
+                                    @endif
+                                    @if(auth()->check())
+                                        @if(auth()->user()->type>=1)
+                                            <li><a href="{{route('products.index')}}">{{ __('Dashboard') }}</a></li>
+                                        @endif
                                     @endif
                                 </ul>
                             </nav>
