@@ -134,7 +134,7 @@ div#productContainer {
                                         <li><a href="{{ route('logout') }}"
                                                onclick="event.preventDefault();
                                                      document.getElementById('mylogout-form').submit();">{{ __('f.logout') }}</a></li>
-                                        
+
                                     @endif
                                     @if(auth()->check())
                                         @if(auth()->user()->type>=1)
