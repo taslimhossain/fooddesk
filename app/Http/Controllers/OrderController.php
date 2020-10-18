@@ -556,7 +556,7 @@ class OrderController extends Controller
                 'products_id' => $product_id,
                 'discount' => $orderline->product->discount,
                 'add_costs' => $product_id,
-                'client_name' => $orderline->order->user->lastname,
+                'client_name' => ($orderline->order->user->lastname)?$orderline->order->user->lastname:$orderline->order->user->firstname,
                 'clients_id' => $orderline->product->id,
                 'com_name' => "",
                 'content_type' => 1,
