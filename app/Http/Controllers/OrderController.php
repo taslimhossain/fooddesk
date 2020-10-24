@@ -542,7 +542,7 @@ class OrderController extends Controller
         $print_list = [];
         foreach ($orders as $orderline) {
             $order = $orderline->order;
-            if ($order->product->sell_product_option=="weight_wise"){
+            if ($orderline->product->sell_product_option=="weight_wise"){
                 $unit = ($orderline->quantity>999) ? ($orderline->quantity/1000). "kg" : $orderline->quantity." gr";
             }else{
                 $unit = $orderline->quantity;
