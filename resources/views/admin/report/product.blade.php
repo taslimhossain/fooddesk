@@ -103,7 +103,8 @@
                                         @else
                                         {{$quantities[$order->product_id]}}
                                         {{--  person  --}}
-                                         @endif</td>
+                                     @endif
+                                    </td>
                                     <td>
                                         @if($order->product->sell_product_option=="weight_wise")
                                         €{{number_format((float)$order->product->price_weight*1000, 2, ',', '')}}/kg

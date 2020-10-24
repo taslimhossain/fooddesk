@@ -357,6 +357,7 @@ class OrderController extends Controller
         })->with('product')->get();
         $quantities = [];
         foreach ($orders as $order) {
+
             if (array_key_exists($order->product_id, $quantities)) {
                 $quantities[$order->product_id] = $quantities[$order->product_id] + $order->quantity;
             } else {
@@ -541,6 +542,11 @@ class OrderController extends Controller
         $print_list = [];
         foreach ($orders as $orderline) {
             $order = $orderline->order;
+            if ($order->product->sell_product_option=="weight_wise"){
+                $unit = ($orderline->quantity>999) ? ($orderline->quantity/1000). "kg" : $orderline->quantity." gr";
+            }else{
+                $unit = $orderline->quantity;
+            }
             if($orderline->order->user_id>0):
                 $default_price = ($orderline->product->price_per_unit>0)?$orderline->product->price_per_unit:$orderline->product->price_weight;
             $print_list[] = [
@@ -566,11 +572,11 @@ class OrderController extends Controller
                 'pro_remark' => "",
                 'proname' => $orderline->product->product_name_dch,
                 'qty_unit' => $orderline->product->weight_unit,
-                'quantity' => $orderline->quantity,
+                'quantity' => $unit,
                 'sub_total' => $orderline->price*$orderline->quantity,
                 'total' =>str_ireplace('.',',',$order->total),
-                'weight_per_unit' => $orderline->product->weight_unit,
-                'weight_unit' => $orderline->product->weight_unit,
+                'weight_per_unit' => '',
+                'weight_unit' => '',
             ];
             endif;
         }
