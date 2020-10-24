@@ -24,13 +24,13 @@
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{{asset('/')}}admin/plugins/daterangepicker/daterangepicker.css">
     <!-- summernote -->
-    <link rel="stylesheet" href="{{asset('/')}}admin/plugins/summernote/summernote-bs4.css">
+    {{--<link rel="stylesheet" href="{{asset('/')}}admin/plugins/summernote/summernote-bs4.css">--}}
     <link rel="stylesheet" href="{{asset('/')}}admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
     <link rel="stylesheet" href="{{asset('/')}}admin/plugins/toastr/toastr.min.css">
     <link rel="stylesheet" href="{{asset('/')}}admin/plugins/toastr/toastr.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('/')}}admin/plugins/summernote/summernote-bs4.min.css">
+    {{--<link rel="stylesheet" href="{{asset('/')}}admin/plugins/summernote/summernote-bs4.min.css">--}}
     <style>
         .hide{
             visibility: hidden;
@@ -69,6 +69,7 @@
             overflow-x: hidden;
         }
     </style>
+    @yield('style')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

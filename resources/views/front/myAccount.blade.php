@@ -93,7 +93,7 @@
                                             @foreach($user->orders as $order)
                                                 <tr>
                                                     <td>#{{$order->id}}</td>
-                                                    <td>{{$order->created_at->format('M d/y')}}</td>
+                                                    <td>{{$order->created_at->format('d-m-Y')}}</td>
                                                     <td>Pending</td>
                                                     <td>€{{number_format((float)$order->total, 2, ',', '')}}</td>
                                                     <td><a href="{{route('myOrder',$order->id)}}" class="btn">{{ __('f.view') }}</a></td>

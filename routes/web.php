@@ -93,12 +93,14 @@ Route::resource('categories', 'CategoriesController')->middleware('is_admin');
 Route::resource('sub-categories', 'SubCategoriesController')->middleware('is_admin');
 Route::post('sub-categories/status', 'SubCategoriesController@update_status')->name('update_subcate_status')->middleware('is_admin');
 Route::resource('products', 'ProductsController')->middleware('is_admin');
+Route::get('search/product', 'ProductsController@search')->name('searchProduct')->middleware('is_admin');
 Route::get('sync-product', 'ProductsController@sync')->name('syncProduct')->middleware('is_admin');
 Route::get('sync-all', 'ProductsController@syncAll')->name('syncAll')->middleware('is_admin');
 Route::get('orders', 'OrderController@orderList')->name('orderList')->middleware('is_admin');
 Route::get('update-billing', 'CheckoutController@updateBilling')->name('updateBilling')->middleware('is_admin');
 Route::get('order-data', 'OrderController@orderDataTable')->middleware('is_admin');
 Route::get('edit-order/{order}', 'OrderController@editOrder')->name('editOrder')->middleware('is_admin');
+Route::post('add-order/product/{order}', 'OrderController@addProduct')->name('addProduct')->middleware('is_admin');
 Route::get('print-order/{order}', 'OrderController@printOrder')->name('printOrder')->middleware('is_admin');
 Route::get('print/per_product/{order}', 'OrderController@printProducts')->name('per_product')->middleware('is_admin');
 Route::get('print/per_order/{order}', 'OrderController@printPerOrder')->name('per_order')->middleware('is_admin');
@@ -127,4 +129,5 @@ Route::get('edit-orderline/{orderLine}', 'OrderController@updateOrderLine')->nam
 
 Route::resource('page', 'PageController');
 Route::get('/remove-banner','SettingsController@removeBanner');
+Route::get('/remove-logo','SettingsController@removeLogo');
 Route::get('/{slug}','HomeController@page');

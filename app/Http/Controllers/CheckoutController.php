@@ -311,7 +311,7 @@ class CheckoutController extends Controller
             $body=implode($order->id,explode('#id',$body));
             $body=implode($order->created_at->format('d-m-Y'),explode('#date',$body));
             $body=implode($order->date->format('D m/d') . " on " . $order->hour . ":" . $order->minute,explode('#pickup',$body));
-        $detail="<table style='border:1px solid black;width: 100%;border-collapse: collapse;'>";
+        $detail="<table style='border:1px solid black;width: 100%;border-collapse: collapse;'><tr><td style='padding:3px;border:1px solid black'>".__('f.quantity')."</td><td style='padding:3px;border:1px solid black'>".__('f.product')."</td><td style='padding:3px;border:1px solid black'>".__('f.price')."</td><td style='padding:3px;border:1px solid black'>".__('f.sub_total')."</td></tr>";
         foreach($order->orderLines as $item)
         {
             $detail.='<tr>
@@ -387,6 +387,7 @@ class CheckoutController extends Controller
             $body=implode($order->created_at->format('d-m-Y'),explode('#date',$body));
             $body=implode($order->date->format('D m/d') . " on " . $order->hour . ":" . $order->minute,explode('#pickup',$body));
             $email = Setting::firstOrFail()->order_email;
+            $body=implode($detail,explode('#detail',$body));
             $data = array("body" => $body);
             Mail::send('mail', $data, function ($message) use ($subject, $email, $from_email) {
                 $message->to($email)

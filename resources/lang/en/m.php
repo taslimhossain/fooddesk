@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'product_name' => 'Product Name',
     'orderList' => 'Order List',
     'orderNo' => 'Order No',
     'orderId' => 'Order ID',

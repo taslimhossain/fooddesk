@@ -177,6 +177,16 @@
                                 </td>
                             </tr>
                             @endforeach
+
+                            <tr>
+                                <th><button onclick="addOrderProduct('{{$order->id}}')"  class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
                         </table>
 
                     </div>
@@ -188,18 +198,61 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="addProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">PACKAGE INFO</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="widget-one">
+                        <form id="update-form" method="post" action="{{route('addProduct',['order'=>$order->id])}}">
+                            @csrf
+                            <div class="form-group mb-4">
+                                <label for="product_name"> {{ __('m.product_name') }} </label>
+                                <br>
+                                <select style="width: 100%;height: 100%" class="form-control" name="product_name" id="product_name">
+                                </select>
+
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="product_quantity"> {{ __('m.quantity') }} </label>
+                                <input type="number" name="product_quantity" id="product_quantity" class="form-control">
+                            </div>
+                            <input type="submit" name="submit" value="submit"
+                                   class="btn btn-primary btn-block mb-4 mr-2">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     let updateLine=(id)=>{
         let quantity=document.getElementById("qnt"+id).value;
         let weight=document.getElementById("weight"+id).value;
-        if(weight=="KG"){
+        if(weight==="KG"){
             quantity*=1000;
         }
         window.location.href="{{URL::to('/edit-orderline')}}/"+id+"?quantity="+quantity
-
     }
+    let addOrderProduct=(order_id)=>{
+        //alert(order_id);
+        $("#addProduct").modal("show");
+    }
+
 </script>
+
 <script>
 let dateChanged=(val)=>{
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -207,4 +260,41 @@ let dateChanged=(val)=>{
     $("#dayname").val(days[new Date(val).getDay()])
 }
 </script>
+@endsection
+@section('script')
+    <script src="{{asset("admin/plugins/select2/js/select2.min.js")}}"></script>
+    <script>
+        $(function(){
+            $("#product_name").select2({
+                dropdownParent: $("#addProduct"),
+                placeholder: "Select Product",
+                ajax: {
+                    url: '{{route('searchProduct')}}',
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            search: params.term,
+                            type: "public"
+                        };
+                    },
+                    processResults: function (response) {
+                        return {
+                            results: $.map(response.data, function (txt, val) {
+                                return {id: txt.fid, text: txt.product_name_dch}
+                            })
+                        };
+                    }
+                }
+            });
+        });
+    </script>
+@endsection
+@section('style')
+    <link rel="stylesheet" href="{{asset("admin/plugins/select2/css/select2.min.css")}}">
+    <style>
+        .select2-container--default.select2-container--focus .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--single {
+            border-color: #80bdff;
+            height: 100%;
+        }
+    </style>
 @endsection

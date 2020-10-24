@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\OrderDayException;
 use App\OrderDayPickup;
@@ -12,7 +11,7 @@ use App\Setting;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use DataTables;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
@@ -431,6 +430,20 @@ class SettingsController extends Controller
         if (request()->id == 5) {
             $setting->update([
                 "banner5" => ""
+            ]);
+        }
+        return "deleted";
+    }
+    public function removeLogo()
+    {
+        $setting = Setting::first();
+        if (request()->type == 'logo') {
+            $setting->update([
+                "logo" => ""
+            ]);
+        }else{
+            $setting->update([
+                "sticky_logo" => ""
             ]);
         }
         return "deleted";

@@ -19,27 +19,14 @@ display:none
         </div>
     </div>
 </div>
-
-<!--=====  End of breadcrumb area  ======-->
-
-
-<!--=============================================
-    =            Cart page content         =
-    =============================================-->
-
-
 <div class="page-section section mb-50">
     <div class="container">
         <div class="row" id="cart-container">
             <div class="col-12">
-                <form action="#">
-                    <!--=======  cart table  =======-->
-
-                    <div class="cart-table table-responsive mb-40" >
+                <div class="cart-table table-responsive mb-40" >
                         <table class="table">
                             <thead>
                                 <tr>
-
                                     <th class="pro-title">Product</th>
                                     <th class="pro-price">Price</th>
                                     <th class="pro-quantity">Quantity</th>
@@ -100,44 +87,7 @@ display:none
                             </tbody>
                         </table>
                     </div>
-
-                    <!--=======  End of cart table  =======-->
-
-
-                </form>
-
-                <div class="row">
-                    <div class="col-lg-6 col-12 d-flex">
-                        <!--=======  Cart summery  =======-->
-
-                        <div class="cart-summary">
-                            <div class="cart-summary-wrap">
-                                <h4>Order Summary</h4>
-                                <p>Sub Total <span>€{{number_format((float)$total, 2, ',', '')}}</span></p>
-                                <h2>Grand Total <span>€{{number_format((float)$total, 2, ',', '')}}</span></h2>
-                            </div>
-                            <div class="cart-summary-button">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                    <a href="{{route('home')}}">
-                                        <button class="update-btn">Continue Shopping</button>
-                                        </a>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                    <a href="{{route('checkout')}}">
-                                        <button class="checkout-btn mb-20">Checkout</button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--=======  End of Cart summery  =======-->
-
-                    </div>
-
-                </div>
-
+                <!--=======  End of cart table  =======-->
             </div>
 
         </div>

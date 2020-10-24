@@ -22,7 +22,7 @@
                                 <table class="table table-bordered data-table">
                                         <thead>
                                              <tr>
-                                                 <th>{{__('m.first_name')}}</th><th>{{__('m.lastname')}}</th><th>{{__('m.email')}}</th><th>{{__('m.action')}}</th>
+                                                 <th>{{__('m.lastname')}}</th><th>{{__('m.first_name')}}</th><th>{{__('m.email')}}</th><th>{{__('m.action')}}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -51,8 +51,8 @@
           serverSide: true,
           ajax: "{{ url('/user-data') }}",
           columns: [
-              {data: 'firstname', name: 'firstname'},
               {data: 'lastname', name: 'lastname'},
+              {data: 'firstname', name: 'firstname'},
               {data: 'email', name: 'email'},
               {data: 'action', name: 'action'},
 

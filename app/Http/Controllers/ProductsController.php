@@ -332,4 +332,22 @@ class ProductsController extends Controller
 
         return redirect('products')->with('flash_message', 'Product deleted!');
     }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search()
+    {
+        try {
+            $string = \request()->input('search', '');
+            $response = Product::where('product_name_dch', 'like', "%$string%")->select(['product_name_dch', 'fid'])->get();
+            return response()->json(['total' => $response->count(), 'data' => $response]);
+        } catch (\Exception $exception) {
+            return response()->json(['message' => $exception->getMessage()], 500);
+        }
+    }
+
 }

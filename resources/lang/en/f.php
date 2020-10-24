@@ -3,6 +3,7 @@
 return [
     "productCategories" => "Product Categories",
     "shoppingCart" => "Shopping Cart",
+    "sub_total" => "Subtotal",
     "subTotal" => "Subtotal",
     "cartTotal" => "Cart Total",
     "checkout" => "Checkout",

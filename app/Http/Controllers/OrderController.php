@@ -9,6 +9,7 @@ use App\Product;
 use App\Setting;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Maatwebsite\Excel\Facades\Excel;
@@ -260,6 +261,42 @@ class OrderController extends Controller
     public function editOrder(Order $order)
     {
         return view('admin.order.edit', compact('order'));
+    }
+
+    public function addProduct(Request $request, Order $order)
+    {
+        $this->validate($request, [
+            'product_name' => 'required|exists:products,fid',
+            'product_quantity' => 'required|numeric'
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $product_id = $request->input('product_name');
+            $quantity = $request->input('product_quantity');
+            $product = Product::where(['fid' => $product_id])->first();
+            if ($product->sell_product_option == "per_unit") {
+                $price = $product->price_per_unit * $quantity;
+            } elseif ($product->sell_product_option == "weight_wise") {
+                $price = $product->price_weight * $quantity;
+            } else {
+                $price = $product->price_per_person * $quantity;
+            }
+
+            $order->total = $order->total + $price;
+            $order->save();
+            OrderLine::create([
+                "order_id" => $order->id,
+                "product_id" => $product_id,
+                "quantity" => $quantity,
+                "price" => $price
+            ]);
+            DB::commit();
+            return redirect()->back()->with('success', "Add product to order success");
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(["Something went wrong"]);
+        }
     }
 
     public function deleteOrder(Order $order)
@@ -542,42 +579,42 @@ class OrderController extends Controller
         $print_list = [];
         foreach ($orders as $orderline) {
             $order = $orderline->order;
-            if ($orderline->product->sell_product_option=="weight_wise"){
-                $unit = ($orderline->quantity>999) ? ($orderline->quantity/1000). "kg" : $orderline->quantity." gr";
-            }else{
+            if ($orderline->product->sell_product_option == "weight_wise") {
+                $unit = ($orderline->quantity > 999) ? ($orderline->quantity / 1000) . "kg" : $orderline->quantity . " gr";
+            } else {
                 $unit = $orderline->quantity;
             }
-            if($orderline->order->user_id>0):
-                $default_price = ($orderline->product->price_per_unit>0)?$orderline->product->price_per_unit:$orderline->product->price_weight;
-            $print_list[] = [
-                'id' => $order->id,
-                'orders_id' => $order->id,
-                'products_id' => $product_id,
-                'discount' => $orderline->product->discount,
-                'add_costs' => $product_id,
-                'client_name' => $orderline->order->user->firstname." ".$orderline->order->user->lastname,
-                'clients_id' => $orderline->product->id,
-                'com_name' => "",
-                'content_type' => 1,
-                'default_price' => str_ireplace('.',',',$default_price),
-                'extra_field' => "",
-                'extra_name' => "",
-                'image' => $orderline->product->image,
-                'order_pickupdate' => date('Y-m-d',strtotime($order->date)),
-                'order_pickuptime' => $order->hour.":".$order->minute,
-                'order_remarks' => "",
-                'price_per_person' => "0",
-                'price_per_unit' => "0",
-                'price_weight' => $orderline->product->price_weight,
-                'pro_remark' => "",
-                'proname' => $orderline->product->product_name_dch,
-                'qty_unit' => $orderline->product->weight_unit,
-                'quantity' => $unit,
-                'sub_total' => $orderline->price*$orderline->quantity,
-                'total' =>str_ireplace('.',',',$order->total),
-                'weight_per_unit' => '',
-                'weight_unit' => '',
-            ];
+            if ($orderline->order->user_id > 0):
+                $default_price = ($orderline->product->price_per_unit > 0) ? $orderline->product->price_per_unit : $orderline->product->price_weight;
+                $print_list[] = [
+                    'id' => $order->id,
+                    'orders_id' => $order->id,
+                    'products_id' => $product_id,
+                    'discount' => $orderline->product->discount,
+                    'add_costs' => $product_id,
+                    'client_name' => $orderline->order->user->firstname . " " . $orderline->order->user->lastname,
+                    'clients_id' => $orderline->product->id,
+                    'com_name' => "",
+                    'content_type' => 1,
+                    'default_price' => str_ireplace('.', ',', $default_price),
+                    'extra_field' => "",
+                    'extra_name' => "",
+                    'image' => $orderline->product->image,
+                    'order_pickupdate' => date('Y-m-d', strtotime($order->date)),
+                    'order_pickuptime' => $order->hour . ":" . $order->minute,
+                    'order_remarks' => "",
+                    'price_per_person' => "0",
+                    'price_per_unit' => "0",
+                    'price_weight' => $orderline->product->price_weight,
+                    'pro_remark' => "",
+                    'proname' => $orderline->product->product_name_dch,
+                    'qty_unit' => $orderline->product->weight_unit,
+                    'quantity' => $unit,
+                    'sub_total' => $orderline->price * $orderline->quantity,
+                    'total' => str_ireplace('.', ',', $order->total),
+                    'weight_per_unit' => '',
+                    'weight_unit' => '',
+                ];
             endif;
         }
         return $print_list;
