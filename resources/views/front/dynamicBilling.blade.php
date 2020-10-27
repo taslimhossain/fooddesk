@@ -1,4 +1,4 @@
-<h4 class="checkout-title">Billing Address</h4>
+<h4 class="checkout-title">{{ __('f.billingAddress') }}</h4>
 
 									<div class="row">
 
@@ -31,9 +31,7 @@
 											<input required
                                             value="{{$user->address1}}"
                                              name="address1" type="text" placeholder="{{ __('f.addressLine') }} 1">
-											<input required
-                                            value="{{$user->address2}}"
-                                             name="address2" type="text" placeholder="{{ __('f.address_line_2') }} 2">
+
 										</div>
 
 
@@ -70,13 +68,7 @@
                                                 }
                                             </script>
                                             @endguest
-											<div class="check-box">
-												<input type="checkbox"
-                                                name="shipping_different"
-                                                onclick="shippingDifferent(this.checked)"
-                                                id="shiping_address" data-shipping>
-												<label for="shiping_address">{{ __('f.shipToDifferentAddress') }}</label>
-											</div>
+
 										</div>
 
 									</div>

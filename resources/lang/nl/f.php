@@ -30,7 +30,7 @@ return [
     "emailAddress" => "E-mailadres",
     "phoneNumber" => "Telefoonnummer",
     "companyName" => "Bedrijfsnaam",
-    "companyNumber" => "Bedrijfsnummer",
+    "companyNumber" => "Ondernemingsnummer",
     "address" => "Adres",
     "message" => "Geef hier uw bemerkingen",
     "placeOrder" => "Bestel",
